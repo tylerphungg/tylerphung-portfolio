@@ -1,11 +1,11 @@
 import { RevealOnScroll } from "../RevealOnScroll";
 import { ProjectCarousel } from "../ProjectCarousel";
-import popout1 from "/tylerphung/images/popout/popout1.jpg";
-import popout2 from "/tylerphung/images/popout/popout2.jpg";
-import popout3 from "/tylerphung/images/popout/popout3.jpg";
-import popout4 from "/tylerphung/images/popout/popout4.jpg";
-import popoutVideo from "/tylerphung/images/popout/popout-demo.mp4";
-import audibelleVideo from "/tylerphung/images/popout/AudibELLE.mp4";
+import popout1 from "/images/popout/popout1.jpg";
+import popout2 from "/images/popout/popout2.jpg";
+import popout3 from "/images/popout/popout3.jpg";
+import popout4 from "/images/popout/popout4.jpg";
+import popoutVideo from "/images/popout/popout-demo.mp4";
+import audibelleVideo from "/images/popout/AudibELLE.mp4";
 
 export const Projects = () => {
   const popoutMedia = [
