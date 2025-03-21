@@ -1,0 +1,178 @@
+@import "tailwindcss";
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Space Grotesk", sans-serif;
+  color: #f3f4f6;
+  overflow-x: hidden;
+}
+
+@layer utilities {
+  @keyframes blink {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+  }
+
+  .animate-blink {
+    animation: blink 0.8s step-end infinite;
+  }
+
+  @keyframes loading {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(250%);
+    }
+  }
+
+  .animate-loading-bar {
+    animation: loading 0.8s ease infinite;
+  }
+
+  @keyframes float {
+    0% {
+      transform: translate(0, 0) rotate(0deg);
+      opacity: 0.7;
+    }
+    25% {
+      transform: translate(50px, -50px) rotate(90deg);
+      opacity: 1;
+    }
+    50% {
+      transform: translate(0, -100px) rotate(180deg);
+      opacity: 0.7;
+    }
+    75% {
+      transform: translate(-50px, -50px) rotate(270deg);
+      opacity: 1;
+    }
+    100% {
+      transform: translate(0, 0) rotate(360deg);
+      opacity: 0.7;
+    }
+  }
+
+  @keyframes float-alt {
+    0% {
+      transform: translate(0, 0) rotate(0deg);
+      opacity: 0.7;
+    }
+    25% {
+      transform: translate(-50px, -30px) rotate(-90deg);
+      opacity: 1;
+    }
+    50% {
+      transform: translate(0, -80px) rotate(-180deg);
+      opacity: 0.7;
+    }
+    75% {
+      transform: translate(50px, -30px) rotate(-270deg);
+      opacity: 1;
+    }
+    100% {
+      transform: translate(0, 0) rotate(-360deg);
+      opacity: 0.7;
+    }
+  }
+
+  .animate-float {
+    animation: float linear infinite;
+  }
+
+  .animate-float-alt {
+    animation: float-alt linear infinite;
+  }
+
+  .animate-gradient-x {
+    background-size: 200% 200%;
+    animation: gradient-x 3s ease infinite;
+  }
+}
+
+@keyframes gradient-x {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+body {
+    overflow-x: hidden;
+    position: relative;
+}
+
+#home {
+  background: url('/images/clouds.jpg') no-repeat center top;
+  background-size: cover;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* ⬇️ Add a smooth transition from clouds to gradient */
+#home::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 150px; /* Adjust height for smoother blending */
+  background: linear-gradient(to bottom, rgba(255,255,255,0), #ffa7a6);
+}
+
+/* 📜 About Section - Soft Gradient */
+#about {
+  background: linear-gradient(to bottom, #ffa7a6, #FFCBA5);
+  min-height: 100vh;
+}
+
+/* 🎨 Other Sections */
+#projects {
+  background: linear-gradient(to bottom, #FFCBA5, #FF9899);
+  min-height: 100vh;
+}
+
+#contact {
+  background: linear-gradient(to bottom, #FF9899, #fe97ac);
+  min-height: 100vh;
+}
+
+#drawing {
+  background: linear-gradient(to bottom, #fe97ac, #ff69b4);
+  min-height: 100vh;
+}
+
+/* 🌀 Ensure no section gaps */
+section {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+/* Disable Tailwind background utilities */
+.bg-black, .bg-dark, .bg-gray-900 {
+  background: none !important;
+}

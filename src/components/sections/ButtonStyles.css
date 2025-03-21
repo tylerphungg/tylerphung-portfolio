@@ -1,0 +1,38 @@
+/* ✨ Glowing White Text Effect */
+.glow-text {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #ffffff;
+    text-shadow: 
+      0 0 15px rgba(255, 255, 255, 0.9), 
+      0 0 30px rgba(255, 255, 255, 0.7), 
+      0 0 45px rgba(255, 255, 255, 0.5);
+    transition: text-shadow 0.5s ease-in-out;
+  }
+  
+  /* 🌟 Glowing Button Styles */
+  .glow-button {
+    display: inline-block;
+    padding: 12px 24px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #ffffff;
+    background: transparent;
+    border: 2px solid white;
+    border-radius: 8px;
+    text-shadow: 
+      0 0 10px rgba(255, 255, 255, 0.8), 
+      0 0 20px rgba(255, 255, 255, 0.6);
+    transition: text-shadow 0.5s ease-in-out, transform 0.3s ease-in-out;
+  }
+  
+  /* ✨ Smooth, Bright Glow on Hover */
+  .glow-button:hover {
+    text-shadow: 
+      0 0 20px rgba(255, 255, 255, 1), 
+      0 0 40px rgba(255, 255, 255, 0.9), 
+      0 0 60px rgba(255, 255, 255, 0.8);
+    transform: scale(1.05); /* Slight lift effect */
+  }
+  
