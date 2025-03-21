@@ -24,7 +24,7 @@ export const LoadingScreen = ({ onComplete }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex flex-col items-center justify-center" style={{
-      backgroundImage: url ('/images/clouds.jpg'),
+      backgroundImage: `url('/tylerphung-portfolio/images/clouds.jpg')`,
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       backgroundRepeat: 'no-repeat',
