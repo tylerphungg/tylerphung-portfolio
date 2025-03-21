@@ -84,7 +84,7 @@ export const Navbar = ({ menuOpen, setMenuOpen }) => {
               </motion.a>
             ))}
             <motion.a
-              href="/tylerphung/images/resume.pdf"
+              href="/images/Tyler_Phung_Resume.pdf"
               download="Tyler_Phung_Resume.pdf"
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -145,7 +145,7 @@ export const Navbar = ({ menuOpen, setMenuOpen }) => {
             </a>
           ))}
           <motion.a
-            href="/tylerphung/images/resume.pdf"
+            href="/images/Tyler_Phung_Resume.pdf"
             download="Tyler_Phung_Resume.pdf"
             className="block px-3 py-2 text-white font-medium relative overflow-hidden rounded-lg"
             onClick={() => setMenuOpen(false)}
