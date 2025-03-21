@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import cloudsImage from "/images/clouds.jpg";
 
 export const LoadingScreen = ({ onComplete }) => {
   const [text, setText] = useState("");
@@ -23,17 +24,16 @@ export const LoadingScreen = ({ onComplete }) => {
   }, [onComplete]);
 
   return (
-    <div className="fixed inset-0 z-50 flex flex-col items-center justify-center" style={{
-      backgroundImage: 'url("/images/clouds.jpg")',
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-      backgroundRepeat: 'no-repeat',
-    }}>
-      <div className="absolute inset-0 bg-white/10 backdrop-blur-[50px]" style={{
-        backdropFilter: 'blur(50px)',
-        WebkitBackdropFilter: 'blur(50px)',
-      }}></div>
-      <div className="absolute inset-0 bg-white/5 backdrop-blur-[50px]" style={{
+    <div 
+      className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black"
+      style={{
+        backgroundImage: `url(${cloudsImage})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+      }}
+    >
+      <div className="absolute inset-0 bg-black/50 backdrop-blur-[50px]" style={{
         backdropFilter: 'blur(50px)',
         WebkitBackdropFilter: 'blur(50px)',
       }}></div>
