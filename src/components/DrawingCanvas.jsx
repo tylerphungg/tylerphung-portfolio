@@ -11,9 +11,15 @@ export const DrawingCanvas = () => {
     const canvas = canvasRef.current;
     const context = canvas.getContext('2d');
     
-    // Set canvas size
-    canvas.width = 500;
-    canvas.height = 300;
+    // Set canvas size based on screen width
+    const setCanvasSize = () => {
+      const maxWidth = Math.min(window.innerWidth - 40, 500);
+      canvas.width = maxWidth;
+      canvas.height = maxWidth * 0.6; // Maintain aspect ratio
+    };
+    
+    setCanvasSize();
+    window.addEventListener('resize', setCanvasSize);
     
     // Set initial styles
     context.strokeStyle = color;
@@ -22,18 +28,37 @@ export const DrawingCanvas = () => {
     context.lineJoin = 'round';
     
     setCtx(context);
+
+    return () => window.removeEventListener('resize', setCanvasSize);
   }, []);
 
+  const getCoordinates = (e) => {
+    if (e.type.includes('touch')) {
+      const touch = e.touches[0];
+      const rect = canvasRef.current.getBoundingClientRect();
+      return {
+        offsetX: touch.clientX - rect.left,
+        offsetY: touch.clientY - rect.top
+      };
+    }
+    return {
+      offsetX: e.nativeEvent.offsetX,
+      offsetY: e.nativeEvent.offsetY
+    };
+  };
+
   const startDrawing = (e) => {
-    const { offsetX, offsetY } = e.nativeEvent;
+    e.preventDefault(); // Prevent scrolling while drawing
+    const { offsetX, offsetY } = getCoordinates(e);
     ctx.beginPath();
     ctx.moveTo(offsetX, offsetY);
     setIsDrawing(true);
   };
 
   const draw = (e) => {
+    e.preventDefault(); // Prevent scrolling while drawing
     if (!isDrawing) return;
-    const { offsetX, offsetY } = e.nativeEvent;
+    const { offsetX, offsetY } = getCoordinates(e);
     ctx.lineTo(offsetX, offsetY);
     ctx.stroke();
   };
@@ -59,19 +84,22 @@ export const DrawingCanvas = () => {
   };
 
   return (
-    <div className="flex flex-col items-center gap-4">
-      <div className="bg-white/10 rounded-xl p-4 backdrop-blur-sm border border-white/20">
+    <div className="flex flex-col items-center gap-4 w-full">
+      <div className="bg-white/10 rounded-xl p-4 backdrop-blur-sm border border-white/20 w-full">
         <canvas
           ref={canvasRef}
           onMouseDown={startDrawing}
           onMouseMove={draw}
           onMouseUp={stopDrawing}
           onMouseOut={stopDrawing}
-          className="rounded-lg cursor-crosshair"
+          onTouchStart={startDrawing}
+          onTouchMove={draw}
+          onTouchEnd={stopDrawing}
+          className="rounded-lg cursor-crosshair w-full"
           style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)' }}
         />
       </div>
-      <div className="flex gap-4 items-center">
+      <div className="flex flex-wrap gap-4 items-center justify-center">
         <div className="flex items-center gap-2">
           <label className="text-white/90">Color:</label>
           <input

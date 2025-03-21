@@ -29,11 +29,11 @@ export const ImageCarousel = ({ images }) => {
 
   const handleImageError = (e) => {
     console.error('Error loading image:', e.target.src);
-    e.target.src = '/tylerphung/images/clouds.jpg'; // Fallback image
+    e.target.src = '/images/clouds.jpg'; // Fallback image
   };
 
   return (
-    <div className="relative w-[900px] h-[500px] mx-auto my-8 rounded-2xl p-12 flex items-center gap-16">
+    <div className="relative w-full max-w-[900px] h-auto min-h-[500px] mx-auto my-4 md:my-8 rounded-2xl p-4 md:p-12 flex flex-col md:flex-row items-center gap-8 md:gap-16">
       {/* Glass Effect Container */}
       <div className="absolute inset-0 bg-white/10 rounded-2xl border-2 border-white/70" 
            style={{
@@ -44,13 +44,13 @@ export const ImageCarousel = ({ images }) => {
       </div>
 
       {/* Content Container */}
-      <div className="relative z-10 w-full flex items-center gap-16">
+      <div className="relative z-10 w-full flex flex-col md:flex-row items-center gap-8 md:gap-16">
         {/* Image Carousel Container */}
-        <div className="relative w-[300px] h-[300px]">
+        <div className="relative w-full max-w-[300px] h-[250px] md:h-[300px]">
           {/* Navigation Arrows */}
           <button
             onClick={() => scrollToImage('prev')}
-            className="absolute -left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 flex items-center justify-center rounded-full transition-all hover:scale-110"
+            className="absolute -left-4 top-1/2 -translate-y-1/2 z-10 w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-full transition-all hover:scale-110"
             style={{
               backdropFilter: 'blur(8px)',
               WebkitBackdropFilter: 'blur(8px)',
@@ -58,11 +58,11 @@ export const ImageCarousel = ({ images }) => {
               border: '1px solid rgba(255, 255, 255, 0.7)'
             }}
           >
-            <span className="text-white text-2xl">←</span>
+            <span className="text-white text-xl md:text-2xl">←</span>
           </button>
           <button
             onClick={() => scrollToImage('next')}
-            className="absolute -right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 flex items-center justify-center rounded-full transition-all hover:scale-110"
+            className="absolute -right-4 top-1/2 -translate-y-1/2 z-10 w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-full transition-all hover:scale-110"
             style={{
               backdropFilter: 'blur(8px)',
               WebkitBackdropFilter: 'blur(8px)',
@@ -70,7 +70,7 @@ export const ImageCarousel = ({ images }) => {
               border: '1px solid rgba(255, 255, 255, 0.7)'
             }}
           >
-            <span className="text-white text-2xl">→</span>
+            <span className="text-white text-xl md:text-2xl">→</span>
           </button>
 
           {/* Image Container */}
@@ -87,7 +87,7 @@ export const ImageCarousel = ({ images }) => {
                   <img
                     src={image}
                     alt={`Slide ${index + 1}`}
-                    className="w-full h-[300px] object-cover rounded-xl"
+                    className="w-full h-[250px] md:h-[300px] object-cover rounded-xl"
                     onError={handleImageError}
                   />
                   {/* Image Outline */}
@@ -99,7 +99,7 @@ export const ImageCarousel = ({ images }) => {
           </div>
 
           {/* Dots Indicator */}
-          <div className="flex justify-center gap-3 mt-4">
+          <div className="flex justify-center gap-2 md:gap-3 mt-4">
             {images.map((_, index) => (
               <button
                 key={index}
@@ -109,7 +109,7 @@ export const ImageCarousel = ({ images }) => {
                   container.scrollTo({ left: scrollAmount, behavior: 'smooth' });
                   setCurrentIndex(index);
                 }}
-                className={`w-3 h-3 rounded-full transition-colors ${
+                className={`w-2 h-2 md:w-3 md:h-3 rounded-full transition-colors ${
                   currentIndex === index ? 'bg-white' : 'bg-white/50'
                 }`}
               />
@@ -118,17 +118,17 @@ export const ImageCarousel = ({ images }) => {
         </div>
 
         {/* ID Card Content */}
-        <div className="text-white flex-1">
-          <h3 className="text-7xl font-semibold mb-6 glow-text" style={{
+        <div className="text-white flex-1 text-center md:text-left">
+          <h3 className="text-5xl md:text-7xl font-semibold mb-4 md:mb-6 glow-text" style={{
             textShadow: `
               0 0 20px rgba(255, 255, 255, 0.8),
               0 0 40px rgba(255, 255, 255, 0.6),
               0 0 60px rgba(255, 255, 255, 0.4)
             `
           }}>Tyler Phung</h3>
-          <p className="text-3xl text-white/90 mb-10">Full Stack Developer</p>
-          <div className="space-y-6">
-            <p className="text-xl text-white/80">"As a full-stack developer, I see coding as more than just logic—it's a canvas for creativity. I love blending design, innovation, and technology to craft intuitive, scalable applications that don’t just function well but feel like an experience."</p>
+          <p className="text-2xl md:text-3xl text-white/90 mb-6 md:mb-10">Full Stack Developer</p>
+          <div className="space-y-4 md:space-y-6">
+            <p className="text-lg md:text-xl text-white/80">"As a full-stack developer, I see coding as more than just logic—it's a canvas for creativity. I love blending design, innovation, and technology to craft intuitive, scalable applications that don't just function well but feel like an experience."</p>
           </div>
         </div>
       </div>

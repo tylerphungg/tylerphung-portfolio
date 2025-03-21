@@ -133,12 +133,12 @@ export const Navbar = ({ menuOpen, setMenuOpen }) => {
         transition={{ duration: 0.2 }}
         className="md:hidden bg-black/20 backdrop-blur-md border-b border-white/10"
       >
-        <div className="px-2 pt-2 pb-3 space-y-1">
+        <div className="px-4 py-4 space-y-3">
           {navItems.map((item) => (
             <a
               key={item.name}
               href={item.href}
-              className="block px-3 py-2 text-white/80 hover:text-white transition-colors text-sm font-medium"
+              className="block px-4 py-3 text-white/90 hover:text-white transition-colors text-base font-medium rounded-lg hover:bg-white/5"
               onClick={() => setMenuOpen(false)}
             >
               {item.name}
@@ -147,7 +147,7 @@ export const Navbar = ({ menuOpen, setMenuOpen }) => {
           <motion.a
             href="/images/Tyler_Phung_Resume.pdf"
             download="Tyler_Phung_Resume.pdf"
-            className="block px-3 py-2 text-white font-medium relative overflow-hidden rounded-lg"
+            className="block px-4 py-3 text-white font-medium relative overflow-hidden rounded-lg mt-2"
             onClick={() => setMenuOpen(false)}
           >
             <span className="relative z-10">Resume</span>
