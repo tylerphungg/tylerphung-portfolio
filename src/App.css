@@ -18,7 +18,6 @@ body {
 
 @keyframes loading-bar {
   0% { width: 0%; }
-  50% { width: 40%; }
   100% { width: 100%; }
 }
 
@@ -28,14 +27,5 @@ body {
 
 .animate-loading-bar {
   animation: loading-bar 2s ease-in-out infinite;
-}
-
-/* Ensure loading screen is visible */
-.fixed {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
 }
 
