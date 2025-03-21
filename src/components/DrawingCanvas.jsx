@@ -14,8 +14,14 @@ export const DrawingCanvas = () => {
     // Set canvas size based on screen width
     const setCanvasSize = () => {
       const maxWidth = Math.min(window.innerWidth - 40, 500);
-      canvas.width = maxWidth;
-      canvas.height = maxWidth * 0.6; // Maintain aspect ratio
+      const scale = window.devicePixelRatio || 1;
+      canvas.width = maxWidth * scale;
+      canvas.height = maxWidth * 0.6 * scale;
+      canvas.style.width = `${maxWidth}px`;
+      canvas.style.height = `${maxWidth * 0.6}px`;
+      
+      // Scale the context to handle high DPI displays
+      context.scale(scale, scale);
     };
     
     setCanvasSize();
@@ -36,14 +42,17 @@ export const DrawingCanvas = () => {
     if (e.type.includes('touch')) {
       const touch = e.touches[0];
       const rect = canvasRef.current.getBoundingClientRect();
+      const scale = window.devicePixelRatio || 1;
       return {
-        offsetX: touch.clientX - rect.left,
-        offsetY: touch.clientY - rect.top
+        offsetX: (touch.clientX - rect.left) * scale,
+        offsetY: (touch.clientY - rect.top) * scale
       };
     }
+    const rect = canvasRef.current.getBoundingClientRect();
+    const scale = window.devicePixelRatio || 1;
     return {
-      offsetX: e.nativeEvent.offsetX,
-      offsetY: e.nativeEvent.offsetY
+      offsetX: (e.clientX - rect.left) * scale,
+      offsetY: (e.clientY - rect.top) * scale
     };
   };
 
@@ -95,7 +104,7 @@ export const DrawingCanvas = () => {
           onTouchStart={startDrawing}
           onTouchMove={draw}
           onTouchEnd={stopDrawing}
-          className="rounded-lg cursor-crosshair w-full"
+          className="rounded-lg cursor-crosshair w-full touch-none"
           style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)' }}
         />
       </div>

@@ -112,7 +112,7 @@ export const Navbar = ({ menuOpen, setMenuOpen }) => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.4 }}
             onClick={() => setMenuOpen(!menuOpen)}
-            className="md:hidden text-white hover:text-white/90 transition-colors duration-300 font-mono"
+            className="md:hidden text-white hover:text-white/90 transition-colors duration-300 font-mono p-2"
             style={{ 
               fontSize: '16px',
               letterSpacing: '0.05em'
