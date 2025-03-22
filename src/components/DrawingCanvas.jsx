@@ -93,7 +93,7 @@ export const DrawingCanvas = () => {
   };
 
   return (
-    <div className="flex flex-col items-center gap-4 w-full">
+    <div className="flex flex-col items-center justify-center gap-4 w-full max-w-2xl mx-auto px-4">
       <div className="bg-white/10 rounded-xl p-4 backdrop-blur-sm border border-white/20 w-full">
         <canvas
           ref={canvasRef}
@@ -108,7 +108,7 @@ export const DrawingCanvas = () => {
           style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)' }}
         />
       </div>
-      <div className="flex flex-wrap gap-4 items-center justify-center">
+      <div className="flex flex-wrap gap-4 items-center justify-center w-full">
         <div className="flex items-center gap-2">
           <label className="text-white/90">Color:</label>
           <input
