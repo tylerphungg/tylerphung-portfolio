@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { HiMenu } from "react-icons/hi";
 
-export const Navbar = ({ menuOpen, setMenuOpen }) => {
+export const Navbar = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {

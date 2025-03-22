@@ -13,12 +13,12 @@ export const DrawingCanvas = () => {
     
     // Set canvas size based on screen width
     const setCanvasSize = () => {
-      const maxWidth = Math.min(window.innerWidth - 40, 500);
+      const maxWidth = Math.min(window.innerWidth - 40, 600); // Increased max width for better drawing area
       const scale = window.devicePixelRatio || 1;
       canvas.width = maxWidth * scale;
-      canvas.height = maxWidth * 0.6 * scale;
+      canvas.height = (maxWidth * 0.6) * scale; // Maintain aspect ratio
       canvas.style.width = `${maxWidth}px`;
-      canvas.style.height = `${maxWidth * 0.6}px`;
+      canvas.style.height = `${(maxWidth * 0.6)}px`;
       
       // Scale the context to handle high DPI displays
       context.scale(scale, scale);
@@ -94,7 +94,8 @@ export const DrawingCanvas = () => {
 
   return (
     <div className="flex flex-col items-center justify-center gap-4 w-full max-w-2xl mx-auto px-4">
-      <div className="bg-white/10 rounded-xl p-4 backdrop-blur-sm border border-white/20 w-full">
+      <h2 className="text-lg md:text-xl text-white">Drawing Canvas</h2>
+      <div className="bg-white/10 rounded-xl p-4 backdrop-blur-sm border border-white/20 w-full flex justify-center">
         <canvas
           ref={canvasRef}
           onMouseDown={startDrawing}
@@ -104,8 +105,8 @@ export const DrawingCanvas = () => {
           onTouchStart={startDrawing}
           onTouchMove={draw}
           onTouchEnd={stopDrawing}
-          className="rounded-lg cursor-crosshair w-full touch-none"
-          style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)' }}
+          className="rounded-lg cursor-crosshair"
+          style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)', maxWidth: '100%', height: 'auto' }} // Ensure full width and auto height
         />
       </div>
       <div className="flex flex-wrap gap-4 items-center justify-center w-full">
