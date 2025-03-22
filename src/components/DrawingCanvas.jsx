@@ -11,21 +11,9 @@ export const DrawingCanvas = () => {
     const canvas = canvasRef.current;
     const context = canvas.getContext('2d');
     
-    // Set canvas size based on screen width
-    const setCanvasSize = () => {
-      const maxWidth = Math.min(window.innerWidth - 40, 600); // Increased max width for better drawing area
-      const scale = window.devicePixelRatio || 1;
-      canvas.width = maxWidth * scale;
-      canvas.height = (maxWidth * 0.6) * scale; // Maintain aspect ratio
-      canvas.style.width = `${maxWidth}px`;
-      canvas.style.height = `${(maxWidth * 0.6)}px`;
-      
-      // Scale the context to handle high DPI displays
-      context.scale(scale, scale);
-    };
-    
-    setCanvasSize();
-    window.addEventListener('resize', setCanvasSize);
+    // Set canvas size
+    canvas.width = 500;
+    canvas.height = 300;
     
     // Set initial styles
     context.strokeStyle = color;
@@ -34,40 +22,18 @@ export const DrawingCanvas = () => {
     context.lineJoin = 'round';
     
     setCtx(context);
-
-    return () => window.removeEventListener('resize', setCanvasSize);
   }, []);
 
-  const getCoordinates = (e) => {
-    if (e.type.includes('touch')) {
-      const touch = e.touches[0];
-      const rect = canvasRef.current.getBoundingClientRect();
-      const scale = window.devicePixelRatio || 1;
-      return {
-        offsetX: (touch.clientX - rect.left) * scale,
-        offsetY: (touch.clientY - rect.top) * scale
-      };
-    }
-    const rect = canvasRef.current.getBoundingClientRect();
-    const scale = window.devicePixelRatio || 1;
-    return {
-      offsetX: (e.clientX - rect.left) * scale,
-      offsetY: (e.clientY - rect.top) * scale
-    };
-  };
-
   const startDrawing = (e) => {
-    e.preventDefault(); // Prevent scrolling while drawing
-    const { offsetX, offsetY } = getCoordinates(e);
+    const { offsetX, offsetY } = e.nativeEvent;
     ctx.beginPath();
     ctx.moveTo(offsetX, offsetY);
     setIsDrawing(true);
   };
 
   const draw = (e) => {
-    e.preventDefault(); // Prevent scrolling while drawing
     if (!isDrawing) return;
-    const { offsetX, offsetY } = getCoordinates(e);
+    const { offsetX, offsetY } = e.nativeEvent;
     ctx.lineTo(offsetX, offsetY);
     ctx.stroke();
   };
@@ -93,23 +59,19 @@ export const DrawingCanvas = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center gap-4 w-full max-w-2xl mx-auto px-4">
-      <h2 className="text-lg md:text-xl text-white">Drawing Canvas</h2>
-      <div className="bg-white/10 rounded-xl p-4 backdrop-blur-sm border border-white/20 w-full flex justify-center">
+    <div className="flex flex-col items-center gap-4">
+      <div className="bg-white/10 rounded-xl p-4 backdrop-blur-sm border border-white/20">
         <canvas
           ref={canvasRef}
           onMouseDown={startDrawing}
           onMouseMove={draw}
           onMouseUp={stopDrawing}
           onMouseOut={stopDrawing}
-          onTouchStart={startDrawing}
-          onTouchMove={draw}
-          onTouchEnd={stopDrawing}
           className="rounded-lg cursor-crosshair"
-          style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)', maxWidth: '100%', height: 'auto' }} // Ensure full width and auto height
+          style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)' }}
         />
       </div>
-      <div className="flex flex-wrap gap-4 items-center justify-center w-full">
+      <div className="flex gap-4 items-center">
         <div className="flex items-center gap-2">
           <label className="text-white/90">Color:</label>
           <input

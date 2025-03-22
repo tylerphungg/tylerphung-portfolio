@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { HiMenu } from "react-icons/hi";
 
-export const Navbar = () => {
-  const [menuOpen, setMenuOpen] = useState(false);
+export const Navbar = ({ menuOpen, setMenuOpen }) => {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -113,7 +112,7 @@ export const Navbar = () => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.4 }}
             onClick={() => setMenuOpen(!menuOpen)}
-            className="md:hidden text-white hover:text-white/90 transition-colors duration-300 font-mono p-2"
+            className="md:hidden text-white hover:text-white/90 transition-colors duration-300 font-mono"
             style={{ 
               fontSize: '16px',
               letterSpacing: '0.05em'
@@ -124,40 +123,39 @@ export const Navbar = () => {
         </div>
       </div>
 
-      <AnimatePresence>
-        {menuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.2 }}
-            className="md:hidden bg-black/20 backdrop-blur-md border-b border-white/10"
+      <motion.div
+        initial={false}
+        animate={menuOpen ? "open" : "closed"}
+        variants={{
+          open: { opacity: 1, height: "auto" },
+          closed: { opacity: 0, height: 0 },
+        }}
+        transition={{ duration: 0.2 }}
+        className="md:hidden bg-black/20 backdrop-blur-md border-b border-white/10"
+      >
+        <div className="px-2 pt-2 pb-3 space-y-1">
+          {navItems.map((item) => (
+            <a
+              key={item.name}
+              href={item.href}
+              className="block px-3 py-2 text-white/80 hover:text-white transition-colors text-sm font-medium"
+              onClick={() => setMenuOpen(false)}
+            >
+              {item.name}
+            </a>
+          ))}
+          <motion.a
+            href="/images/Tyler_Phung_Resume.pdf"
+            download="Tyler_Phung_Resume.pdf"
+            className="block px-3 py-2 text-white font-medium relative overflow-hidden rounded-lg"
+            onClick={() => setMenuOpen(false)}
           >
-            <div className="px-4 py-4 space-y-3">
-              {navItems.map((item) => (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  className="block px-4 py-3 text-white/90 hover:text-white transition-colors text-base font-medium rounded-lg hover:bg-white/5"
-                  onClick={() => setMenuOpen(false)}
-                >
-                  {item.name}
-                </a>
-              ))}
-              <motion.a
-                href="/images/Tyler_Phung_Resume.pdf"
-                download="Tyler_Phung_Resume.pdf"
-                className="block px-4 py-3 text-white font-medium relative overflow-hidden rounded-lg mt-2"
-                onClick={() => setMenuOpen(false)}
-              >
-                <span className="relative z-10">Resume</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-[#ff69b4] via-[#fe97ac] to-[#ff69b4] animate-gradient-x" />
-                <div className="absolute inset-[1px] bg-black/20 rounded-lg" />
-              </motion.a>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            <span className="relative z-10">Resume</span>
+            <div className="absolute inset-0 bg-gradient-to-r from-[#ff69b4] via-[#fe97ac] to-[#ff69b4] animate-gradient-x" />
+            <div className="absolute inset-[1px] bg-black/20 rounded-lg" />
+          </motion.a>
+        </div>
+      </motion.div>
     </motion.nav>
   );
 };
