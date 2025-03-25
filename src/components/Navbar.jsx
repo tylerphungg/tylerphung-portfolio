@@ -59,6 +59,7 @@ export const Navbar = ({ menuOpen, setMenuOpen }) => {
             Tyler Phung
           </motion.div>
 
+          {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             {navItems.map((item, index) => (
               <motion.a
@@ -84,7 +85,7 @@ export const Navbar = ({ menuOpen, setMenuOpen }) => {
               </motion.a>
             ))}
             <motion.a
-              href="/images/Tyler_Phung_Resume.pdf"
+              href="/tylerphung/images/resume.pdf"
               download="Tyler_Phung_Resume.pdf"
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -107,15 +108,16 @@ export const Navbar = ({ menuOpen, setMenuOpen }) => {
             </motion.a>
           </div>
 
+          {/* Mobile Menu Button */}
           <motion.button
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.4 }}
             onClick={() => setMenuOpen(!menuOpen)}
-            className="md:hidden text-white hover:text-white/90 transition-colors duration-300 font-mono"
+            className="md:hidden text-white hover:text-white/90 transition-colors duration-300 p-2 rounded-lg bg-white/10"
             style={{ 
-              fontSize: '16px',
-              letterSpacing: '0.05em'
+              backdropFilter: 'blur(8px)',
+              WebkitBackdropFilter: 'blur(8px)',
             }}
           >
             <HiMenu className="h-6 w-6" />
@@ -123,37 +125,40 @@ export const Navbar = ({ menuOpen, setMenuOpen }) => {
         </div>
       </div>
 
+      {/* Mobile Menu */}
       <motion.div
         initial={false}
         animate={menuOpen ? "open" : "closed"}
         variants={{
-          open: { opacity: 1, height: "auto" },
-          closed: { opacity: 0, height: 0 },
+          open: { opacity: 1, height: "auto", display: "block" },
+          closed: { opacity: 0, height: 0, transitionEnd: { display: "none" } },
         }}
         transition={{ duration: 0.2 }}
-        className="md:hidden bg-black/20 backdrop-blur-md border-b border-white/10"
+        className="md:hidden bg-black/20 backdrop-blur-md"
+        style={{
+          backdropFilter: 'blur(8px)',
+          WebkitBackdropFilter: 'blur(8px)',
+        }}
       >
-        <div className="px-2 pt-2 pb-3 space-y-1">
+        <div className="px-4 py-2 space-y-2">
           {navItems.map((item) => (
             <a
               key={item.name}
               href={item.href}
-              className="block px-3 py-2 text-white/80 hover:text-white transition-colors text-sm font-medium"
+              className="block py-3 px-4 text-white/90 hover:text-white transition-colors text-base font-medium rounded-lg hover:bg-white/10"
               onClick={() => setMenuOpen(false)}
             >
               {item.name}
             </a>
           ))}
-          <motion.a
-            href="/images/Tyler_Phung_Resume.pdf"
+          <a
+            href="/tylerphung/images/resume.pdf"
             download="Tyler_Phung_Resume.pdf"
-            className="block px-3 py-2 text-white font-medium relative overflow-hidden rounded-lg"
+            className="block py-3 px-4 text-white font-medium relative overflow-hidden rounded-lg bg-gradient-to-r from-[#ff69b4] via-[#fe97ac] to-[#ff69b4]"
             onClick={() => setMenuOpen(false)}
           >
             <span className="relative z-10">Resume</span>
-            <div className="absolute inset-0 bg-gradient-to-r from-[#ff69b4] via-[#fe97ac] to-[#ff69b4] animate-gradient-x" />
-            <div className="absolute inset-[1px] bg-black/20 rounded-lg" />
-          </motion.a>
+          </a>
         </div>
       </motion.div>
     </motion.nav>

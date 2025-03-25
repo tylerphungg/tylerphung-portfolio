@@ -5,13 +5,13 @@ export const Drawing = () => {
   return (
     <section
       id="drawing"
-      className="min-h-screen flex items-center justify-center py-20 relative"
+      className="min-h-screen flex items-center justify-center relative"
     >
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#ff69b4] via-transparent to-transparent opacity-10"></div>
       <RevealOnScroll>
         <div className="max-w-5xl mx-auto px-4 relative z-10">
           <h2
-            className="text-5xl font-semibold mb-12 text-white text-center glow-text"
+            className="text-4xl md:text-5xl font-semibold mb-6 md:mb-12 text-white text-center glow-text"
             style={{
               textShadow: `
                 0 0 20px rgba(255, 255, 255, 0.8),
@@ -20,12 +20,12 @@ export const Drawing = () => {
               `,
             }}
           >
-            🎨 Interactive Drawing Canvas
+            Interactive Drawing Canvas
           </h2>
-          <p className="text-white/80 text-center mb-8 text-lg">
+          <p className="text-base md:text-lg text-white/80 text-center mb-6 md:mb-8">
             Take a break and unleash your creativity! Draw something fun using the canvas below.
           </p>
-          <div className="rounded-2xl p-8 relative">
+          <div className="rounded-2xl p-4 md:p-8 relative">
             <div
               className="absolute inset-0 bg-white/10 rounded-2xl border-2 border-white/70"
               style={{

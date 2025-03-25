@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export const ProjectCarousel = ({ media }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [error, setError] = useState(null);
+  const [direction, setDirection] = useState(0);
 
   useEffect(() => {
     // Preload images
@@ -18,16 +20,39 @@ export const ProjectCarousel = ({ media }) => {
     });
   }, [media]);
 
-  const nextSlide = () => {
-    setCurrentIndex((prevIndex) => 
-      prevIndex === media.length - 1 ? 0 : prevIndex + 1
-    );
+  const slideVariants = {
+    enter: (direction) => ({
+      x: direction > 0 ? 1000 : -1000,
+      opacity: 0
+    }),
+    center: {
+      zIndex: 1,
+      x: 0,
+      opacity: 1
+    },
+    exit: (direction) => ({
+      zIndex: 0,
+      x: direction < 0 ? 1000 : -1000,
+      opacity: 0
+    })
   };
 
-  const prevSlide = () => {
-    setCurrentIndex((prevIndex) => 
-      prevIndex === 0 ? media.length - 1 : prevIndex - 1
-    );
+  const swipeConfidenceThreshold = 10000;
+  const swipePower = (offset, velocity) => {
+    return Math.abs(offset) * velocity;
+  };
+
+  const paginate = (newDirection) => {
+    setDirection(newDirection);
+    if (newDirection === 1) {
+      setCurrentIndex((prevIndex) => 
+        prevIndex === media.length - 1 ? 0 : prevIndex + 1
+      );
+    } else {
+      setCurrentIndex((prevIndex) => 
+        prevIndex === 0 ? media.length - 1 : prevIndex - 1
+      );
+    }
   };
 
   if (error) {
@@ -52,35 +77,83 @@ export const ProjectCarousel = ({ media }) => {
 
         {/* Main Media Display */}
         <div className="relative z-10 w-full h-full">
-          {media[currentIndex].type === 'video' ? (
-            <video
-              className="w-full h-full object-cover rounded-lg"
-              controls
-              src={media[currentIndex].url}
-              poster={media[currentIndex].thumbnail}
-              onError={(e) => {
-                console.error(`Failed to load video: ${media[currentIndex].url}`, e);
-                setError(`Failed to load video: ${media[currentIndex].url}`);
-              }}
-            />
-          ) : (
-            <img
-              src={media[currentIndex].url}
-              alt={media[currentIndex].alt}
-              className="w-full h-full object-cover rounded-lg"
-              onError={(e) => {
-                console.error(`Failed to load image: ${media[currentIndex].url}`, e);
-                setError(`Failed to load image: ${media[currentIndex].url}`);
-              }}
-            />
-          )}
+          <AnimatePresence initial={false} custom={direction}>
+            {media[currentIndex].type === 'video' ? (
+              <motion.video
+                key={currentIndex}
+                custom={direction}
+                variants={slideVariants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                transition={{
+                  x: { type: "spring", stiffness: 300, damping: 30 },
+                  opacity: { duration: 0.2 }
+                }}
+                drag="x"
+                dragConstraints={{ left: 0, right: 0 }}
+                dragElastic={1}
+                onDragEnd={(e, { offset, velocity }) => {
+                  const swipe = swipePower(offset.x, velocity.x);
+                  if (swipe < -swipeConfidenceThreshold) {
+                    paginate(1);
+                  } else if (swipe > swipeConfidenceThreshold) {
+                    paginate(-1);
+                  }
+                }}
+                className="w-full h-full object-cover rounded-lg absolute top-0 left-0"
+                controls
+                src={media[currentIndex].url}
+                poster={media[currentIndex].thumbnail}
+                onError={(e) => {
+                  console.error(`Failed to load video: ${media[currentIndex].url}`, e);
+                  setError(`Failed to load video: ${media[currentIndex].url}`);
+                }}
+              />
+            ) : (
+              <motion.img
+                key={currentIndex}
+                custom={direction}
+                variants={slideVariants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                transition={{
+                  x: { type: "spring", stiffness: 300, damping: 30 },
+                  opacity: { duration: 0.2 }
+                }}
+                drag="x"
+                dragConstraints={{ left: 0, right: 0 }}
+                dragElastic={1}
+                onDragEnd={(e, { offset, velocity }) => {
+                  const swipe = swipePower(offset.x, velocity.x);
+                  if (swipe < -swipeConfidenceThreshold) {
+                    paginate(1);
+                  } else if (swipe > swipeConfidenceThreshold) {
+                    paginate(-1);
+                  }
+                }}
+                src={media[currentIndex].url}
+                alt={media[currentIndex].alt}
+                className="w-full h-full object-cover rounded-lg absolute top-0 left-0"
+                onError={(e) => {
+                  console.error(`Failed to load image: ${media[currentIndex].url}`, e);
+                  setError(`Failed to load image: ${media[currentIndex].url}`);
+                }}
+              />
+            )}
+          </AnimatePresence>
         </div>
       </div>
 
       {/* Navigation Buttons with Glass Effect - Only show if there's more than one media item */}
       {media.length > 1 && (
         <>
-          <div className="absolute left-[-20px] top-[128px] -translate-y-1/2 z-20">
+          <motion.div 
+            className="absolute left-[-20px] top-[128px] -translate-y-1/2 z-20"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+          >
             <div className="absolute inset-0 bg-white/10 rounded-full border-2 border-white/20"
                  style={{
                    backdropFilter: 'blur(8px)',
@@ -89,7 +162,7 @@ export const ProjectCarousel = ({ media }) => {
                  }}>
             </div>
             <button
-              onClick={prevSlide}
+              onClick={() => paginate(-1)}
               className="relative text-white p-2 rounded-full hover:bg-white/10 transition-all"
               aria-label="Previous slide"
             >
@@ -97,8 +170,12 @@ export const ProjectCarousel = ({ media }) => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
               </svg>
             </button>
-          </div>
-          <div className="absolute right-[-20px] top-[128px] -translate-y-1/2 z-20">
+          </motion.div>
+          <motion.div 
+            className="absolute right-[-20px] top-[128px] -translate-y-1/2 z-20"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+          >
             <div className="absolute inset-0 bg-white/10 rounded-full border-2 border-white/20"
                  style={{
                    backdropFilter: 'blur(8px)',
@@ -107,7 +184,7 @@ export const ProjectCarousel = ({ media }) => {
                  }}>
             </div>
             <button
-              onClick={nextSlide}
+              onClick={() => paginate(1)}
               className="relative text-white p-2 rounded-full hover:bg-white/10 transition-all"
               aria-label="Next slide"
             >
@@ -115,7 +192,7 @@ export const ProjectCarousel = ({ media }) => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
             </button>
-          </div>
+          </motion.div>
         </>
       )}
 
@@ -123,12 +200,17 @@ export const ProjectCarousel = ({ media }) => {
       {media.length > 1 && (
         <div className="flex justify-center gap-2 mt-4">
           {media.map((item, index) => (
-            <button
+            <motion.button
               key={index}
-              onClick={() => setCurrentIndex(index)}
-              className={`w-2 h-2 rounded-full transition-all ${
-                index === currentIndex ? 'bg-white w-4' : 'bg-white/50'
+              onClick={() => {
+                setDirection(index > currentIndex ? 1 : -1);
+                setCurrentIndex(index);
+              }}
+              className={`h-2 rounded-full transition-all ${
+                index === currentIndex ? 'bg-white w-4' : 'bg-white/50 w-2'
               }`}
+              whileHover={{ scale: 1.2 }}
+              whileTap={{ scale: 0.8 }}
               aria-label={`Go to slide ${index + 1}`}
             />
           ))}

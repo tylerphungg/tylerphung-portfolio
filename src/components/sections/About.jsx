@@ -4,11 +4,11 @@ export const About = () => {
   return (
     <section
       id="about"
-      className="min-h-screen flex items-center justify-center py-20"
+      className="min-h-screen flex items-center justify-center"
     >
       <RevealOnScroll>
         <div className="max-w-2xl mx-auto px-4">
-          <h2 className="text-5xl font-semibold mb-8 text-white text-center glow-text" style={{
+          <h2 className="text-5xl md:text-5xl text-4xl font-semibold mb-8 text-white text-center glow-text" style={{
             textShadow: `
               0 0 20px rgba(255, 255, 255, 0.8),
               0 0 40px rgba(255, 255, 255, 0.6),
@@ -18,7 +18,7 @@ export const About = () => {
             About Me
           </h2>
 
-          <div className="rounded-2xl p-8 relative">
+          <div className="rounded-2xl p-4 md:p-8 relative">
             {/* Glass Effect Container */}
             <div className="absolute inset-0 bg-white/10 rounded-2xl border-2 border-white/70" 
                  style={{
@@ -29,14 +29,14 @@ export const About = () => {
             </div>
 
             <div className="relative z-10">
-              <p className="text-lg text-white/90 mb-6">
+              <p className="text-base md:text-lg text-white/90 mb-6">
                 Passionate developer with expertise in building scalable web
                 applications and creating innovative solutions.
               </p>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="rounded-xl p-4">
-                  <h3 className="text-xl font-semibold mb-4 text-white">Computer Languages</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                <div className="rounded-xl p-3 md:p-4">
+                  <h3 className="text-lg md:text-xl font-semibold mb-3 md:mb-4 text-white">Computer Languages</h3>
                   <div className="flex flex-wrap gap-2">
                     <span className="bg-white/10 text-white py-1.5 px-3 rounded-full text-sm border border-white/20 hover:bg-white/20 transition-all">C</span>
                     <span className="bg-white/10 text-white py-1.5 px-3 rounded-full text-sm border border-white/20 hover:bg-white/20 transition-all">Python</span>
@@ -51,8 +51,8 @@ export const About = () => {
                   </div>
                 </div>
 
-                <div className="rounded-xl p-4">
-                  <h3 className="text-xl font-semibold mb-4 text-white">Computer Skills</h3>
+                <div className="rounded-xl p-3 md:p-4">
+                  <h3 className="text-lg md:text-xl font-semibold mb-3 md:mb-4 text-white">Computer Skills</h3>
                   <div className="flex flex-wrap gap-2">
                     <span className="bg-white/10 text-white py-1.5 px-3 rounded-full text-sm border border-white/20 hover:bg-white/20 transition-all">Bootstrap</span>
                     <span className="bg-white/10 text-white py-1.5 px-3 rounded-full text-sm border border-white/20 hover:bg-white/20 transition-all">MongoDB</span>

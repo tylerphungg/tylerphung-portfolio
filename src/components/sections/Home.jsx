@@ -13,10 +13,10 @@ export const Home = () => {
   return (
     <section
       id="home"
-      className="min-h-screen flex items-center justify-center relative"
+      className="min-h-screen w-full flex items-center justify-center relative overflow-x-hidden px-2 md:px-0"
     >
       <RevealOnScroll>
-        <div className="z-10">
+        <div className="w-full">
           <ImageCarousel images={images} />
         </div>
       </RevealOnScroll>
